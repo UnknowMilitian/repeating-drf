@@ -11,11 +11,4 @@ class CategorySerializer(serializers.ModelSerializer):
 class WomenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Women
-        fields = [
-            "cat_id",
-            "title",
-            "content",
-            "time_created",
-            "time_updated",
-            "is_published",
-        ]
+        fields = '__all__'
