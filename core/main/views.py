@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
 from rest_framework import permissions
+from django.db.models import Count
 
 
 from .models import Category, Blog
@@ -27,6 +28,11 @@ class CategoryRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAdminUser]
+
+
+class CategoryCountAPIView(generics.ListAPIView):
+    queryset = Category.objects.annotate(post_count=Count("blog"))
+    serializer_class = CategorySerializer
 
 
 class BlogListCreateAPIView(generics.ListAPIView):

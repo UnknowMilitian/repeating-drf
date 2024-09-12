@@ -4,6 +4,7 @@ from .views import (
     CategoryCreateAPIView,
     CategoryRetrieveAPIView,
     CategoryRetrieveUpdateDestroyAPIView,
+    CategoryCountAPIView,
     BlogListCreateAPIView,
     BlogRetrieveUpdateDestroyAPIView,
 )
@@ -20,6 +21,11 @@ urlpatterns = [
         "category-update/<int:pk>",
         CategoryRetrieveUpdateDestroyAPIView.as_view(),
         name="category-update",
+    ),
+    path(
+        "category-post-count",
+        CategoryCountAPIView.as_view(),
+        name="category-post-count",
     ),
     path("blogs", BlogListCreateAPIView.as_view(), name="blog-list"),
     path("blog/<int:pk>", BlogRetrieveUpdateDestroyAPIView.as_view(), name="blog-list"),
