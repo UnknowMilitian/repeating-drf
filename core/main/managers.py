@@ -1,5 +1,5 @@
 from django.contrib.auth.models import BaseUserManager
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import make_password
 
 
 class UserManager(BaseUserManager):
@@ -11,16 +11,16 @@ class UserManager(BaseUserManager):
         user.password = make_password(password)
 
         user.save()
-
         return user
 
-    def create_superuser(self, phone, password, **extra_fields):
+    def create_super_user(self, phone, password, **extra_fields):
         extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_usperuser", True)
 
         if extra_fields.get("is_staff") is not True:
-            raise ValueError("Superuser must have is_staff=True")
-        if extra_fields.get("is_superuser") is not True:
-            raise ValueError("Superuser must have is_superuser=True")
+            raise ValueError("Superuser must have is_staff=True.")
 
-        return self.create_superuser(phone, password, **extra_fields)
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+
+        return self.create_user(phone, password, **extra_fields)
