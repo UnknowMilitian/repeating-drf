@@ -2,8 +2,7 @@ import base64
 from rest_framework.authentication import BaseAuthentication
 
 from django.contrib.auth import authenticate
-
-from .models import User
+from django.contrib.auth.models import User
 
 
 class BasicAuthentication(BaseAuthentication):
@@ -12,7 +11,6 @@ class BasicAuthentication(BaseAuthentication):
 
         if isinstance(auth_header, str):
             auth_header = auth_header.encode()
-
         return auth_header
 
     def authenticate(self, request):
@@ -26,7 +24,7 @@ class BasicAuthentication(BaseAuthentication):
         if len(auth_header) != 2 or auth_header[0].lower() != b"basic":
             return None
 
-        auth_header = base64.b64decode(auth_header[1]).decode()
+        auth_header = base64.b64encode(auth_header[1]).decode()
         phone, password = auth_header.split(":")
 
         user = authenticate(request=request, phone=phone, password=password)

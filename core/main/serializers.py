@@ -1,34 +1,46 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
-from rest_framework import exceptions
-from .models import User, Blog
+from .models import Item
 
 
-class UserDetailSerializer(serializers.ModelSerializer):
+class ItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields = ["id", "title", "description"]
+
+
+# Registration Serializers
+class UserRegistrationSerializer(serializers.Serializer):
+    password = serializers.CharField(
+        write_only=True, required=True, style={"input_type": "password"}
+    )
+    password2 = serializers.CharField(
+        write_only=True,
+        required=True,
+        style={"input_type": "password"},
+        label="Confirm password",
+    )
+
     class Meta:
         model = User
-        fields = ("id", "phone", "full_name", "is_staff", "is_superuser")
+        fields = ["username", "email", "password", "password2"]
+
+    def validate(self, data):
+        if data["password"] != data["password2"]:
+            raise serializers.ValidationError("Password do not much")
+
+        return data
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data["username"],
+            email=validated_data["email"],
+            password=validated_data["password"],
+        )
+        return user
 
 
-class PhoneAndPasswordSerializer(serializers.ModelSerializer):
-    phone = serializers.CharField(max_length=20)
-    password = serializers.CharField(max_length=255)
-
-    def validate_password(self, value):
-        if len(value) < 8:
-            raise exceptions.ValidationError(
-                "Password must be at least 8 characters long"
-            )
-        return value
-
-    def validate(self, attrs):
-        print(attrs)
-
-        if not attrs.get("phone").lstrip("+").isdigit():
-            raise exceptions.ValidationError("Invalid phone number")
-        return attrs
-
-
-class BlogSerializer(serializers.ModelSerializer):
+class UserLoginSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Blog
-        fields = "title"
+        model = User
+        fields = ["username", "email"]
