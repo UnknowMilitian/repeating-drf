@@ -1,14 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Item
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.validators import UniqueValidator
-
-
-class ItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Item
-        fields = ["id", "title", "description", "image", "resized_image"]
 
 
 # Registration Serializers

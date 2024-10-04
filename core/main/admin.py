@@ -1,7 +1,22 @@
 from django.contrib import admin
-from .models import Item
+from .models import Category, Product, Order, OrderItem
 
 
-@admin.register(Item)
-class ItemAdmin(admin.ModelAdmin):
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
     pass
