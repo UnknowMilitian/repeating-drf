@@ -2,12 +2,16 @@ asgiref==3.8.1
 certifi==2024.8.30
 charset-normalizer==3.3.2
 Django==5.1.1
+django-cuser==2017.3.16
 django-filter==24.3
+django-resized==1.0.2
+django-tinymce==4.1.0
 djangorestframework==3.15.2
 idna==3.8
 Markdown==3.7
 modeltranslation==0.25
+pillow==10.4.0
+python-dotenv==1.0.1
 sqlparse==0.5.1
 tzdata==2024.1
 urllib3==2.2.2
-python-dotenv==1.0.1
