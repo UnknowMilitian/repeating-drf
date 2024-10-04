@@ -19,7 +19,7 @@ class Product(models.Model):
     stock = models.IntegerField(_("Stock"), default=1)
     is_active = models.BooleanField(_("Is active"), default=False)
     attributes = models.JSONField(_("Attributes"))
-    created_at = models.DateTimeField(_("Created at"), auto_now_add=True)
+    created_at = models.DateTimeField(_("Created at"), auto_now=True)
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
 
     def __str__(self):
@@ -31,7 +31,7 @@ class Order(models.Model):
 
     user = models.ForeignKey(User, related_name="order", on_delete=models.CASCADE)
     status = models.CharField(_("Status"), max_length=10, choices=STATUS, default="PN")
-    created = models.DateTimeField(_("Created"), auto_now_add=True)
+    created = models.DateTimeField(_("Created"), auto_now=True)
 
     def __str__(self):
         return self.user.username
