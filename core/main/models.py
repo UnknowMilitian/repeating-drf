@@ -18,6 +18,7 @@ class Product(models.Model):
     description = models.TextField(_("Description"), blank=True)
     stock = models.IntegerField(_("Stock"), default=1)
     is_active = models.BooleanField(_("Is active"), default=False)
+    price = models.IntegerField(_("Price"), default=1)
     attributes = models.JSONField(_("Attributes"))
     created_at = models.DateTimeField(_("Created at"), auto_now=True)
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
@@ -46,3 +47,10 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"Order: {self.order}, Product: {self.product.name}, Quantity: {self.quantity}"
+
+
+# orm_1 = User.objects.annotate(
+#     order_num=Count("order", distinct=True),
+#     order_sum=Sum("order__orderitem__product__price"),
+#     unique_prod=Count("order__orderitem__product", distinct=True),
+# )
