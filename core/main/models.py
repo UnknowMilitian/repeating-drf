@@ -39,10 +39,8 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Order")
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, verbose_name="Product"
-    )
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="order_items", verbose_name="Order")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Product")
     quantity = models.IntegerField(_("Quantity"), default=0)
 
     def __str__(self):
@@ -53,4 +51,51 @@ class OrderItem(models.Model):
 #     order_num=Count("order", distinct=True),
 #     order_sum=Sum("order__orderitem__product__price"),
 #     unique_prod=Count("order__orderitem__product", distinct=True),
+# )
+
+
+# orm_2 // Qila olmadim
+
+
+# orm_3 = 
+
+# from django.db.models import Q
+
+# def filter_products_by_json(json_data):
+#     filter_conditions = Q()
+#     for key, value in json_data.items():
+#         filter_conditions &= Q(attributes__contains={key: value})
+
+#     products = Product.objects.filter(filter_conditions)
+#     return products
+
+# # Пример использования
+# json_data = {'color': 'red', 'size': 'L'}
+# filtered_products = filter_products_by_json(json_data)
+
+
+# orm_4  = Order.objects.prefetch_related('order_items__product__category')
+
+
+# orm_5 = Qila olmadim
+
+# orm_6 = 
+# from django.db.models import Count, Sum
+# from django.db.models.functions import TruncMonth
+# from django.utils import timezone
+# from datetime import timedelta
+
+# # Calculate the date for 12 months ago
+# one_year_ago = timezone.now() - timedelta(days=365)
+
+# # Query to get the number of orders and total sales for each month
+# monthly_report = (
+#     Order.objects.filter(created__gte=one_year_ago)  # Filter orders from the last year
+#     .annotate(month=TruncMonth('created'))  # Group by month
+#     .values('month')  # Select the month
+#     .annotate(
+#         total_orders=Count('id'),  # Count the number of orders
+#         total_sales=Sum(F('order_items__product__price') * F('order_items__quantity'))  # Sum total sales
+#     )
+#     .order_by('month')  # Order the result by month
 # )
