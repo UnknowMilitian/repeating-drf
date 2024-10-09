@@ -26,10 +26,12 @@ from django.conf.urls.i18n import set_language
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    # path("", include("main.urls"))
+    path("", include("main.urls")),
     path("i18n/", set_language, name="set_language"),
 ]
 
+if "rosetta" in settings.INSTALLED_APPS:
+    urlpatterns += [re_path(r"^rosetta/", include("rosetta.urls"))]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

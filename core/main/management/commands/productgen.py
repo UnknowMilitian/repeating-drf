@@ -3,12 +3,12 @@ import random
 from random import randint
 from datetime import datetime, timedelta
 
-from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
 from django.core.management.base import BaseCommand
 
 # Project imports
 from main.models import (
+    User,
     Category,
     Product,
     Order,
